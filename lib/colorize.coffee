@@ -33,10 +33,6 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
           else if m = subkey.match /^(.*)__added$/
             subcolorizeToCallback(m[1], subvalue, output, '+', subindent)
           else
-
-            if ('__old' of subvalue) and ('__new' of subvalue) and (Object.keys(subvalue).length is 2)
-              console.log "oh yus", subkey
-
             subcolorizeToCallback(subkey, subvalue, output, color, subindent, diff[restOfObject])
         output color, "#{indent}}"
 
