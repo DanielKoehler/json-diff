@@ -1,6 +1,6 @@
 color = require 'cli-color'
 
-{ extendedTypeOf } = require './util'
+{ extendedTypeOf, restOfObject } = require './util'
 
 Theme =
   ' ': (s) -> s
@@ -8,13 +8,18 @@ Theme =
   '-': color.red
 
 
-subcolorizeToCallback = (key, diff, output, color, indent) ->
+subcolorizeToCallback = (key, diff, output, color, indent, context) ->
   prefix    = if key then "#{key}: " else ''
   subindent = indent + '  '
 
   switch extendedTypeOf(diff)
     when 'object'
+
       if ('__old' of diff) and ('__new' of diff) and (Object.keys(diff).length is 2)
+
+        for contextKey, contextVal of context
+          output ' ', indent + contextKey + ": " + JSON.stringify(contextVal)
+
         subcolorizeToCallback(key, diff.__old, output, '-', indent)
         subcolorizeToCallback(key, diff.__new, output, '+', indent)
       else
@@ -25,7 +30,7 @@ subcolorizeToCallback = (key, diff, output, color, indent) ->
           else if m = subkey.match /^(.*)__added$/
             subcolorizeToCallback(m[1], subvalue, output, '+', subindent)
           else
-            subcolorizeToCallback(subkey, subvalue, output, color, subindent)
+            subcolorizeToCallback(subkey, subvalue, output, color, subindent, diff[restOfObject])
         output color, "#{indent}}"
 
     when 'array'
@@ -37,6 +42,7 @@ subcolorizeToCallback = (key, diff, output, color, indent) ->
           looksLikeDiff = no
 
       if looksLikeDiff
+
         for [op, subvalue] in diff
           if op is ' ' && !subvalue?
             output(' ', subindent + '...')

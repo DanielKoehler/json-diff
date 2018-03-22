@@ -1,5 +1,5 @@
 { SequenceMatcher } = require 'difflib'
-{ extendedTypeOf } = require './util'
+{ extendedTypeOf, restOfObject } = require './util'
 { colorize } = require './colorize'
 
 isScalar = (obj) -> (typeof obj isnt 'object')
@@ -27,11 +27,21 @@ objectDiff = (obj1, obj2, options = {}) ->
     score += Math.min(20, Math.max(-10, subscore / 5))  # BATMAN!
 
   if Object.keys(result).length is 0
-    [score, result] = [100 * Math.max(Object.keys(obj1).length, 0.5), undefined]
+    [score, result] = [100 * Math.max(Object.keys(obj1).length - 0, 0.5), undefined]
   else
     score = Math.max(0, score)
 
-  # console.log "objectDiff(#{JSON.stringify(obj1, null, 2)} <=> #{JSON.stringify(obj2, null, 2)}) == #{JSON.stringify([score, result])}"
+  if result and options.context
+
+    resultContext = Object.keys(obj1)
+      .filter( (i) -> 
+        i not of result
+      ).reduce( (res, key) -> 
+          res[key] = obj1[key] 
+          res
+      , {})
+
+    result[restOfObject] = resultContext
 
   return [score, result]
 
@@ -176,5 +186,6 @@ diffString = (obj1, obj2, colorizeOptions, diffOptions = {}) ->
   return colorize(diff(obj1, obj2, diffOptions), colorizeOptions)
 
 
-
 module.exports = { diff, diffString }
+
+

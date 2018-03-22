@@ -6,7 +6,7 @@ tty = require 'tty'
 
 module.exports = (argv) ->
   options = require('dreamopt') [
-    "Usage: json-diff [-vjCk] first.json second.json"
+    "Usage: json-diff [-vjHCk] first.json second.json"
 
     "Arguments:"
     "  first.json              Old file #var(file1) #required"
@@ -15,6 +15,7 @@ module.exports = (argv) ->
     "General options:"
     "  -v, --verbose           Output progress info"
     "  -C, --[no-]color        Colored output"
+    "  -H, --context           Show unchanged keys along with changed keys. For cases such as [{'name':<name>, 'value':<value>}, {...}]"
     "  -j, --raw-json          Display raw JSON encoding of the diff #var(raw)"
     "  -k, --keys-only         Compare only the keys, ignore the differences in values #var(keysOnly)"
   ], argv
@@ -41,7 +42,7 @@ module.exports = (argv) ->
       process.stdout.write JSON.stringify(result, null, 2)
     else
       process.stderr.write "Producing colored output...\n"  if options.verbose
-      process.stdout.write colorize(result, color: options.color)
+      process.stdout.write colorize(result, { color: options.color})
   else
     process.stderr.write "No diff" if options.verbose
 

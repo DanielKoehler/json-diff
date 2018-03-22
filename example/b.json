@@ -9,6 +9,16 @@
     6,
     7
   ],
+  "context": [
+    {
+      "Name":"Important Name",
+      "Value":"Important Value"
+    },    
+    {
+      "Name":"Another Name",
+      "Value":"Some newer important value"
+    }
+  ],
   "fubar": {
     "kaboom": {
       "note": "We're running dangerously low on metasyntatic variables here",

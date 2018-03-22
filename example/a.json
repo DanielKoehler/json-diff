@@ -8,6 +8,16 @@
     4,
     5,
     6
+  ],  
+  "context": [
+    {
+      "Name":"Important Name",
+      "Value":"Important Value"
+    },    
+    {
+      "Name":"Another Name",
+      "Value":"Important Value"
+    }
   ],
   "fubar": {
     "kaboom": {

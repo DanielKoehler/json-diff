@@ -1,4 +1,7 @@
 
+restOfObject = Symbol 42
+
+
 extendedTypeOf = (obj) ->
   result = typeof obj
   if !obj?
@@ -8,4 +11,4 @@ extendedTypeOf = (obj) ->
   else
     result
 
-module.exports = { extendedTypeOf }
+module.exports = { extendedTypeOf, restOfObject }
