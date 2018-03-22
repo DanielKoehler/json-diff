@@ -18,6 +18,12 @@
       "Name":"Another Name",
       "Value":"Some newer important value",
       "ExtraData":"Some extra value"
+    },    
+    {
+      "Name":"Another Name",
+      "Value":"Some newer important value",
+      "ExtraData":"Some extra value",
+      "Blank":""
     }
   ],
   "fubar": {

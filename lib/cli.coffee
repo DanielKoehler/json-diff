@@ -34,6 +34,8 @@ module.exports = (argv) ->
   process.stderr.write "Running diff...\n"  if options.verbose
   result = diff(json1, json2, options)
 
+  console.log JSON.stringify result, null, 4
+
   options.color ?= tty.isatty(process.stdout.fd)
 
   if result
