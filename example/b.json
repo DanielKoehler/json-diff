@@ -16,7 +16,8 @@
     },    
     {
       "Name":"Another Name",
-      "Value":"Some newer important value"
+      "Value":"Some newer important value",
+      "ExtraData":"Some extra value"
     }
   ],
   "fubar": {

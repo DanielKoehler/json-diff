@@ -7,6 +7,7 @@ Theme =
   '+': color.green
   '-': color.red
 
+shouldShowContext = false
 
 subcolorizeToCallback = (key, diff, output, color, indent, context) ->
   prefix    = if key then "#{key}: " else ''
@@ -17,8 +18,10 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
 
       if ('__old' of diff) and ('__new' of diff) and (Object.keys(diff).length is 2)
 
-        for contextKey, contextVal of context
-          output ' ', indent + contextKey + ": " + JSON.stringify(contextVal)
+        if shouldShowContext and context
+          for contextKey, contextVal of context
+            output ' ', indent + contextKey + ": " + JSON.stringify(contextVal)
+            shouldShowContext = false
 
         subcolorizeToCallback(key, diff.__old, output, '-', indent)
         subcolorizeToCallback(key, diff.__new, output, '+', indent)
@@ -30,6 +33,10 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
           else if m = subkey.match /^(.*)__added$/
             subcolorizeToCallback(m[1], subvalue, output, '+', subindent)
           else
+
+            if ('__old' of subvalue) and ('__new' of subvalue) and (Object.keys(subvalue).length is 2)
+              console.log "oh yus", subkey
+
             subcolorizeToCallback(subkey, subvalue, output, color, subindent, diff[restOfObject])
         output color, "#{indent}}"
 
@@ -41,10 +48,13 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
         if (extendedTypeOf(item) isnt 'array') or !((item.length is 2) or ((item.length is 1) and (item[0] is ' '))) or !(typeof(item[0]) is 'string') or item[0].length != 1 or !(item[0] in [' ', '-', '+', '~'])
           looksLikeDiff = no
       
+
       # Only show a single ellipsis
       ellipsisised = false
 
       if looksLikeDiff
+        shouldShowContext = true
+
         for [op, subvalue] in diff
           if op is ' ' && !subvalue?
             if not ellipsisised
@@ -56,6 +66,7 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
             op = ' ' if op is '~'
             ellipsisised = false
             subcolorizeToCallback('', subvalue, output, op, subindent)
+        
       else
         for subvalue in diff
           subcolorizeToCallback('', subvalue, output, color, subindent)
