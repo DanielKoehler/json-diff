@@ -27,6 +27,7 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
         subcolorizeToCallback(key, diff.__new, output, '+', indent)
       else
         output color, "#{indent}#{prefix}{"
+        shouldShowContext = true
         for own subkey, subvalue of diff
           if m = subkey.match /^(.*)__deleted$/
             subcolorizeToCallback(m[1], subvalue, output, '-', subindent)
@@ -49,7 +50,6 @@ subcolorizeToCallback = (key, diff, output, color, indent, context) ->
       ellipsisised = false
 
       if looksLikeDiff
-        shouldShowContext = true
 
         for [op, subvalue] in diff
           if op is ' ' && !subvalue?
