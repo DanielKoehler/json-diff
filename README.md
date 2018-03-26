@@ -3,7 +3,7 @@ JSON structural diff
 
 Does exactly what you think it does:
 
-![Screenshot](https://github.com/andreyvit/json-diff/raw/master/doc/screenshot.png)
+![Screenshot](https://github.com/DanielKoehler/json-diff/raw/master/doc/screenshot.png)
 
 
 Installation
