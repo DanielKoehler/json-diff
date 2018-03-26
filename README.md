@@ -1,15 +1,14 @@
-JSON structural diff
-====================
+JSON structural diff (with --context)
+=======================
 
-Does exactly what you think it does:
+A feature extension of `andreyvit/json-diffShow` to show unchanged keys in objects along with the diff (`-H / --context`). Useful for list of objects with generic keys object e.g. `[{'name':<name>, 'value':<value>}, {'name':<name another>, 'value':<another value>}]`.
 
 ![Screenshot](https://github.com/DanielKoehler/json-diff/raw/master/doc/screenshot.png)
-
 
 Installation
 ------------
 
-    npm install json-diff
+    `npm install -g  https://github.com/DanielKoehler/json-diff`
 
 
 Contribution policy
@@ -41,9 +40,11 @@ Detailed:
     General options:
       -v, --verbose         Output progress info
       -C, --[no-]color      Colored output
+      -H, --context         Show unchanged keys along with changed keys. For cases such as [{'name':<name>, 'value':<value>}, {...}]
       -j, --raw-json        Display raw JSON encoding of the diff
       -k, --keys-only       Compare only the keys, ignore the differences in values
       -h, --help            Display this usage information
+      
 
 
 Features
