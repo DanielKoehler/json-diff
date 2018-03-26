@@ -3,7 +3,19 @@ JSON structural diff (with --context)
 
 A feature extension of [andreyvit/json-diff](https://github.com/andreyvit/json-diff/) to show unchanged keys in objects along with the diff (`-H / --context`). 
 
-Useful for list of objects with generic keys e.g. `[{'name':<name>, 'value':<value>}, {'name':<name another>, 'value':<another value>}]`.
+Useful for list of objects with generic keys e.g. 
+```json
+[
+  {
+   "name":"<name>", 
+   "value":"<value>"
+   }, 
+  {
+   "name":"<another name>",
+   "value":"<another value>" 
+  }
+]
+```
 
 ![Screenshot](https://github.com/DanielKoehler/json-diff/raw/master/doc/screenshot.png)
 
